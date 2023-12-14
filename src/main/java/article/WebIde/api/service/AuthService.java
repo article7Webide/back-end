@@ -5,6 +5,8 @@ import article.WebIde.api.dto.MemberRequestDto;
 import article.WebIde.api.dto.MemberResponseDto;
 import article.WebIde.api.dto.TokenDto;
 import article.WebIde.api.dto.TokenRequestDto;
+import article.WebIde.api.dto.util.InvalidPasswordException;
+import article.WebIde.api.dto.util.PasswordValidator;
 import article.WebIde.api.entity.Authority;
 import article.WebIde.api.entity.Member;
 import article.WebIde.api.entity.RefreshToken;
@@ -12,7 +14,9 @@ import article.WebIde.api.jwt.TokenProvider;
 import article.WebIde.api.repository.MemberRepository;
 import article.WebIde.api.repository.RefreshTokenRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -30,7 +34,14 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
+    public ResponseEntity<MemberResponseDto> signup(MemberRequestDto memberRequestDto) {
+        // 비밀번호 유효성 검사
+        try {
+            PasswordValidator.validatePassword(memberRequestDto.getPassword());
+        } catch (InvalidPasswordException e) {
+            throw new ConstraintViolationException(e.getMessage(), null);
+        }
+
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
@@ -40,7 +51,7 @@ public class AuthService {
         Authority defaultAuthority = Authority.ROLE_USER;
         member.setAuthority(defaultAuthority);
 
-        return MemberResponseDto.of(memberRepository.save(member));
+        return ResponseEntity.ok(MemberResponseDto.of(memberRepository.save(member)));
     }
 
     @Transactional
