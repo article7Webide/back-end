@@ -14,7 +14,14 @@ public class TokenDto {
     private String refreshToken;
     private String token;
 
+    // 수정: RefreshToken이 null이 아니라면 refreshToken을 반환하도록 변경
     public String getRefreshToken(){
-        return null;
+        return refreshToken != null ? refreshToken : "";
+    }
+
+    public String getToken() {
+        return token != null ? token : "";
     }
 }
+
+
