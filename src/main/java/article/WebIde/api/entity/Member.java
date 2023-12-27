@@ -2,6 +2,7 @@ package article.WebIde.api.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,11 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+
     private String email;
 
     private String password;
+
     private String nickname;
 
     @Enumerated(EnumType.STRING)
