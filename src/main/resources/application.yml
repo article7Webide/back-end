@@ -20,4 +20,5 @@ jwt:
 
 logging:
   level:
-    root: debug
+    root: info
+    article.WebIde.*: debug
