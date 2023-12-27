@@ -4,13 +4,19 @@ spring:
       enabled: true
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         show_sql: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-2.c1a6wy8gw2yz.ap-northeast-2.rds.amazonaws.com:3306/webide
+    username: admin
+    password: webide7&
 
 jwt:
   header: Authorization
