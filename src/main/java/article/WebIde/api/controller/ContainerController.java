@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/container")
 @RequiredArgsConstructor
+@CrossOrigin(origins="*", allowedHeaders = "*")
 @Slf4j
 public class ContainerController {
     private final ContainerService containerService;
@@ -36,7 +37,7 @@ public class ContainerController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public ResponseEntity<Object> update (@RequestBody ContainerReqDto containerReqDto) {
         try {
             containerService.update(containerReqDto.getContainerId(), containerReqDto);
@@ -57,7 +58,17 @@ public class ContainerController {
 
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제 되었습니다.");
     }
-    
+
+    @PutMapping("/insert")
+    public ResponseEntity<Object> insert (@RequestBody Container containerReqDto) {
+        try {
+            containerService.register(containerReqDto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 수정 되었습니다.");
+    }
 }
 
 

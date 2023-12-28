@@ -21,7 +21,7 @@ public class Container {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int containerId;
 
-    private String containerName;
+    private String containerNm;
 
     @Column(length = 512)
     private String containerMemo;
@@ -40,7 +40,7 @@ public class Container {
 
     @Builder
     public void updateContainer (String containerName, String containerMemo, String modId, LocalDateTime modDt){
-        this.containerName = containerName;
+        this.containerNm = containerName;
         this.containerMemo = containerMemo;
         this.modId = modId;
         this.modDt = modDt;
