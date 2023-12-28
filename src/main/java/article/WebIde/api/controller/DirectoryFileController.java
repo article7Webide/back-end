@@ -36,7 +36,7 @@ public class DirectoryFileController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     public ResponseEntity<Object> update (@RequestBody DirectoryFileReqDto directoryReqDto) {
         try {
             directoryFileService.update(directoryReqDto.getDirId(), directoryReqDto);
@@ -57,5 +57,14 @@ public class DirectoryFileController {
 
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제 되었습니다.");
     }
+    @PostMapping("/insert")
+    public ResponseEntity<Object> insert (@RequestBody DirectoryFile directoryReqDto) {
+        try {
+            directoryFileService.register(directoryReqDto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
 
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 등록 되었습니다.");
+    }
 }
