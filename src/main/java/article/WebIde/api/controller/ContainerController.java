@@ -67,7 +67,7 @@ public class ContainerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 수정 되었습니다.");
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 등록 되었습니다.");
     }
 }
 
