@@ -57,7 +57,7 @@ public class DirectoryFileController {
 
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제 되었습니다.");
     }
-    @PostMapping("/insert")
+    @PutMapping("/insert")
     public ResponseEntity<Object> insert (@RequestBody DirectoryFile directoryReqDto) {
         try {
             directoryFileService.register(directoryReqDto);
